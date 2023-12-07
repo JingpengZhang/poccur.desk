@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.icon-list > li:nth-of-type(8n), .icon-list > li:last-of-type {
+    border-right: 1px solid #e5e7eb;
+}
+
+.icon-list > li:nth-of-type(-n+8):nth-of-type(n+0) {
+    border-top: 1px solid #e5e7eb;
+}
+
+@layer component {
+
+}
