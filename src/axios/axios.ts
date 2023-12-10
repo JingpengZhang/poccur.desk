@@ -1,27 +1,27 @@
 import axiosInstance from "@/axios/axios-instance.ts";
 
 const axios = {
-  get(url: string, query?: Object) {
+  get<T>(url: string, queries?: Object) {
     let queryStr = '';
 
-    if (query) {
-      const queryKeys = Object.keys(query);
-      const queryValues = Object.values(query)
+    if (queries) {
+      const queriesKeys = Object.keys(queries);
+      const queriesValues = Object.values(queries)
 
-      if (queryKeys.length !== 0) queryStr += "?"
+      if (queriesKeys.length !== 0) queryStr += "?"
 
-      for (let i = 0; i < queryKeys.length; i++) {
-        const key = queryKeys[i];
-        queryStr += key + "=" + queryValues[i];
-        if (i !== queryKeys.length - 1) queryStr += '&'
+      for (let i = 0; i < queriesKeys.length; i++) {
+        const key = queriesKeys[i];
+        queryStr += key + "=" + queriesValues[i];
+        if (i !== queriesKeys.length - 1) queryStr += '&'
       }
     }
 
-    return axiosInstance.get(url + queryStr)
+    return axiosInstance.get<T>(url + queryStr)
   },
 
-  post(url: string, params?: Object) {
-    return axiosInstance.post(url, params)
+  post<T>(url: string, params?: Object) {
+    return axiosInstance.post<T>(url, params)
   }
 }
 
