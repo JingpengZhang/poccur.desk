@@ -5,7 +5,7 @@ import CUDialog from "./components/cu-dialog";
 import useCuDialog from "@/hooks/use-cu-dialog.ts";
 import AntdUtils from "@/utils/antd-utils.ts";
 import type {TreeProps, DataNode} from 'antd/es/tree'
-import EditForm from "@/pages/main/menu/components/edit-form";
+import EditForm from "@/pages/main/admin-menu/components/edit-form";
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import * as NProgress from 'nprogress'
 import {useAppDispatch, useAppSelector} from "@/hooks/useRedux.ts";

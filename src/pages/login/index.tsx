@@ -7,7 +7,7 @@ const LoginPage: React.FC = () => {
 
   return (
       <div>
-        <Link to={'/main/menu'}>Menu</Link>
+        <Link to={'/main/admin-menu'}>Menu</Link>
         <Button type='primary'>测试</Button>
       </div>
   )

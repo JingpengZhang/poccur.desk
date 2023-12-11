@@ -1,11 +1,10 @@
 import {createBrowserRouter} from "react-router-dom";
 import {lazy, Suspense} from "react";
-import App from "@/App.tsx";
 import LoginPage from "@/pages/login";
 
 const MainPage = lazy(() => import('@/pages/main'))
 
-const Menu = lazy(() => import('@/pages/main/menu'))
+const AdminMenu = lazy(() => import('@/pages/main/admin-menu'))
 
 const router = createBrowserRouter([
   {
@@ -18,9 +17,9 @@ const router = createBrowserRouter([
         </Suspense>,
         children: [
           {
-            path: 'menu',
+            path: 'admin-menu',
             element: <Suspense>
-              <Menu/>
+              <AdminMenu/>
             </Suspense>
           }
         ]
