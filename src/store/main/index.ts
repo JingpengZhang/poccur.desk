@@ -1,12 +1,24 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {getMenuTreeRequest, Menu} from "@/services/menu.ts";
+import {BreadCrumbItem} from "@/components/app-breadcrumb";
 
 interface InitialState {
-  menuTree: Menu[]
+  menuTree: Menu[],
+  breadcrumbItems: BreadCrumbItem[]
 }
+
+export const initialBreadcrumbItems: BreadCrumbItem[] = [
+  {
+    id: 'home',
+    name: '首页',
+    path: '/main',
+    iconclass: 'bi bi-house',
+  }
+]
 
 const initialState: InitialState = {
   menuTree: [],
+  breadcrumbItems: initialBreadcrumbItems
 }
 
 export const fetchMenuTree = createAsyncThunk('main/getMenuTree', async () => {
@@ -17,7 +29,11 @@ export const fetchMenuTree = createAsyncThunk('main/getMenuTree', async () => {
 export const mainSlice = createSlice({
   name: "main",
   initialState,
-  reducers: {},
+  reducers: {
+    setBreadcrumbItems: (state, action: PayloadAction<BreadCrumbItem[]>) => {
+      state.breadcrumbItems = initialBreadcrumbItems.concat(action.payload)
+    }
+  },
   extraReducers(builder) {
     builder
         .addCase(fetchMenuTree.fulfilled, (state, action) => {
@@ -32,5 +48,5 @@ export const mainSlice = createSlice({
   }
 })
 
-export const {} = mainSlice.actions
+export const {setBreadcrumbItems} = mainSlice.actions
 export default mainSlice.reducer

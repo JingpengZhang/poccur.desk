@@ -20,7 +20,7 @@ const router = createBrowserRouter([
             path: 'admin-menu',
             element: <Suspense>
               <AdminMenu/>
-            </Suspense>
+            </Suspense>,
           }
         ]
       },
