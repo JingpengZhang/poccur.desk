@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Button, Form, Input, message, Select, Space, TreeSelect} from "antd";
 import IconList from "@/components/icon-list";
-import {getMenuTreeRequest, updateMenuRequest} from "@/services/menu.ts";
-import AntdUtils from "@/utils/antd-utils.ts";
+import {updateMenuRequest} from "@/services/menu.ts";
 import useLoading from "@/hooks/use-loading.ts";
 import * as NProgress from "nprogress";
 import {CUDialogProps} from "@/hooks/use-cu-dialog.ts";
+import useMenuTreeSelectOptions from "@/hooks/use-menu-tree-select-options.ts";
 
 interface FormValues {
   name: string,
@@ -33,29 +33,13 @@ const EditForm: React.FC<Props> = (props) => {
     form.setFieldValue('parent', parent || 'root')
   }, [props.data])
 
+  const menuTree = useMenuTreeSelectOptions();
+  
   const [showCover, setShowCover] = useState(true)
   useEffect(() => {
     setShowCover(!props.updateId)
   }, [props.updateId])
 
-  useEffect(() => {
-    getMenuTree()
-  }, [])
-
-  const [menuTree, setMenuTree] = useState<any[]>()
-
-  const getMenuTree = () => {
-    getMenuTreeRequest().then(res => {
-      const {menuTree} = res.data
-      const treeData = AntdUtils.treeDataAddKeyBy(menuTree, 'id')
-
-      setMenuTree([{
-        key: 'root',
-        name: '根菜单',
-        children: treeData
-      }])
-    })
-  }
 
   const [formData, setFormData] = useState({
     name: '菜单管理3',

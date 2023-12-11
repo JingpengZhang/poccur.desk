@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, message, Modal, notification, Space, Tag, Tree,} from "antd";
-import {deleteMenuRequest, getMenuTreeRequest, Menu, MenuIndexObj, updateMenuIndexesRequest} from "@/services/menu.ts";
+import {deleteMenuRequest, Menu, MenuIndexObj, updateMenuIndexesRequest} from "@/services/menu.ts";
 import CUDialog from "./components/cu-dialog";
 import useCuDialog from "@/hooks/use-cu-dialog.ts";
 import AntdUtils from "@/utils/antd-utils.ts";
@@ -8,32 +8,25 @@ import type {TreeProps, DataNode} from 'antd/es/tree'
 import EditForm from "@/pages/main/menu/components/edit-form";
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import * as NProgress from 'nprogress'
+import {useAppDispatch, useAppSelector} from "@/hooks/useRedux.ts";
+import {fetchMenuTree} from "@/store/main";
 
 const Page: React.FC = () => {
+  const dispatch = useAppDispatch()
+
+  const store = useAppSelector(state => state.main)
 
   useEffect(() => {
-    getMenuTree()
-  }, [])
+    setMenuTree(store.menuTree)
+  }, [store.menuTree])
 
   const [menuTree, setMenuTree] = useState<Menu[]>([]);
-
-  const getMenuTree = () => {
-    getMenuTreeRequest().then((res) => {
-      const {menuTree} = res.data
-      setMenuTree(menuTree)
-    })
-  }
 
   useEffect(() => {
     setDragTree(AntdUtils.treeDataAddIconBy(AntdUtils.treeDataAddKeyBy(menuTree, 'id'), 'iconclass'))
   }, [menuTree])
 
   const [dragTree, setDragTree] = useState([])
-
-
-  const CUDialogState = useCuDialog({
-    name: '菜单项',
-  });
 
   const onDrop: TreeProps['onDrop'] = (info: any) => {
     const dropKey = info.node.key;
@@ -104,6 +97,20 @@ const Page: React.FC = () => {
     setDragTree(AntdUtils.treeDataAddIconBy(AntdUtils.treeDataAddKeyBy(menuTree, 'id'), 'iconclass'))
   }
 
+
+  const CUDialogState = useCuDialog({
+    name: '菜单项',
+  });
+
+  const addMenuItem = (parent: string | null) => {
+    CUDialogState.openDialog('create', {
+      data: {
+        ...CUDialogState.initialData,
+        parent
+      }
+    })
+  }
+
   const editMenuItem = (data: Menu | null) => {
     if (data) {
       CUDialogState.setUpdateId(data.id)
@@ -155,7 +162,7 @@ const Page: React.FC = () => {
           ids: [id]
         }).then(() => {
           message.success('删除成功')
-          getMenuTree();
+          dispatch(fetchMenuTree())
         })
       }
     })
@@ -199,25 +206,34 @@ const Page: React.FC = () => {
             {
                 CUDialogState.updateId &&
                 <div className='w-full rounded-md border flex items-center justify-between mt-4 p-3 text-sm'>
-                  <div className='flex items-center'>
+                  <Space>
                     <span>当前菜单项ID: </span>
-                    <Tag className='ml-3' color='blue'>{CUDialogState.updateId}</Tag>
-                    <div className='ml-3 cursor-pointer'>
+                    <Tag className='' color='blue'>{CUDialogState.updateId}</Tag>
+                    <div className='cursor-pointer'>
                       <CopyToClipboard onCopy={onCopy} text={CUDialogState.updateId}>
                         <i className="bi bi-copy hover:text-blue-600 transition-all"/>
                       </CopyToClipboard>
                     </div>
-                  </div>
-                  <i onClick={() => deleteOne(CUDialogState.updateId)} title='删除'
-                     className="bi bi-trash3 cursor-pointer hover:text-red-600 transition-all"></i>
+                  </Space>
+                  <Space>
+                    <i
+                        onClick={() => addMenuItem(CUDialogState.updateId)}
+                        title='添加子菜单'
+                        className="bi bi-node-plus cursor-pointer hover:text-blue-600 transition-all"></i>
+                    <i onClick={() => deleteOne(CUDialogState.updateId)} title='删除'
+                       className="bi bi-trash3 cursor-pointer hover:text-red-600 transition-all"></i>
+                  </Space>
+
                 </div>
             }
-            <EditForm {...CUDialogState} closeDialogFn={CUDialogState.closeDialog} submitCallback={getMenuTree}/>
+            <EditForm {...CUDialogState} closeDialogFn={CUDialogState.closeDialog}
+                      submitCallback={() => dispatch(fetchMenuTree())}/>
           </div>
 
 
         </div>
-        <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog} submitCallback={getMenuTree}/>
+        <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog}
+                  submitCallback={() => dispatch(fetchMenuTree())}/>
 
       </div>
   )

@@ -68,7 +68,8 @@ const UseCuDialog = <T>(options: {
     setUpdateId,
     setVisible,
     openDialog,
-    closeDialog
+    closeDialog,
+    initialData
   }
 }
 

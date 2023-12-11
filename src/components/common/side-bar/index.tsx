@@ -1,7 +1,7 @@
 import {Menu} from "antd";
-import React, {ReactNode, useEffect, useState} from "react";
-import {getMenuTreeRequest} from "@/services/menu.ts";
+import React, {ReactNode, useMemo} from "react";
 import AntdUtils from "@/utils/antd-utils.ts";
+import {useAppSelector} from "@/hooks/useRedux.ts";
 
 
 interface MenuItem {
@@ -18,21 +18,7 @@ interface MenuItem {
 
 const SideBar: React.FC = () => {
 
-  useEffect(() => {
-    getMenuTree()
-  }, [])
-
-  const [menuTree, setMenuTree] = useState<any[]>([]);
-
-  const getMenuTree = () => {
-    getMenuTreeRequest().then(res => {
-      const {menuTree} = res.data
-      const treeData = AntdUtils.treeDataAddKeyBy(menuTree, 'id')
-      const menuData = convertMenus(treeData)
-
-      setMenuTree(menuData)
-    })
-  }
+  const menuTreeStore = useAppSelector(state => state.main.menuTree)
 
   const convertMenus = (menus: MenuItem[]) => {
     const loop = (menuList: MenuItem[]) => {
@@ -48,13 +34,14 @@ const SideBar: React.FC = () => {
     return menus;
   };
 
-  // const renderMenus = useMemo(() => {
-  //   return convertMenus(menuTree);
-  // }, [menuTree]);
+  const renderMenu = useMemo(() => {
+    const treeData = AntdUtils.treeDataAddKeyBy(menuTreeStore, 'id')
+    return convertMenus(treeData)
+  }, [menuTreeStore]);
 
   return (
       <section className="w-56 flex-shrink-0 bg-white border-r">
-        <Menu mode="inline" items={menuTree as any}/>
+        <Menu mode="inline" items={renderMenu as any}/>
       </section>
   );
 }

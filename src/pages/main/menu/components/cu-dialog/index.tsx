@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Form, Input, message, Modal, Select, Space, TreeSelect} from "antd";
 import IconList from "@/components/icon-list";
-import {createMenuRequest, getMenuTreeRequest} from "@/services/menu.ts";
+import {createMenuRequest} from "@/services/menu.ts";
 import * as NProgress from "nprogress";
-import AntdUtils from "@/utils/antd-utils.ts";
 import useLoading from "@/hooks/use-loading.ts";
 import {CUDialogProps} from "@/hooks/use-cu-dialog.ts";
+import useMenuTreeSelectOptions from "@/hooks/use-menu-tree-select-options.ts";
 
 interface FormValues {
   name: string,
@@ -14,29 +14,18 @@ interface FormValues {
   parent: string
 }
 
-interface Props extends ChangeOneFiledToRequired<CUDialogProps<{}>, 'submitCallback'> {
+interface Props extends ChangeOneFiledToRequired<CUDialogProps<{
+  parent: string | null
+}>, 'submitCallback'> {
 }
 
 const CUDialog: React.FC<Props> = (props) => {
 
   useEffect(() => {
-    getMenuTree()
-  }, [])
+    form.setFieldValue('parent', props.data.parent)
+  }, [props.data.parent])
 
-  const [menuTree, setMenuTree] = useState<any[]>()
-
-  const getMenuTree = () => {
-    getMenuTreeRequest().then(res => {
-      const {menuTree} = res.data
-      const treeData = AntdUtils.treeDataAddKeyBy(menuTree, 'id')
-
-      setMenuTree([{
-        key: 'root',
-        name: '根菜单',
-        children: treeData
-      }])
-    })
-  }
+  const menuTree = useMenuTreeSelectOptions();
 
   const [formData, setFormData] = useState({
     name: '菜单管理3',
