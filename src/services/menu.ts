@@ -8,15 +8,21 @@ export interface Menu {
   iconclass: string;
   index: number;
   parent: string | null;
+  enable: boolean;
+  visible: boolean;
   children?: Menu[]
 }
 
-export const createMenuRequest = async (params: {
+export interface MenuFormParams {
   name: string;
   path: string;
   iconclass: string;
-  parent: string | null
-}) => {
+  parent: string | null;
+  enable: boolean;
+  visible: boolean
+}
+
+export const createMenuRequest = async (params: MenuFormParams) => {
   const result = await axios.post<BaseResponse>(API.menu.create, params)
   return result.data
 }
@@ -34,13 +40,7 @@ export const getMenuTreeRequest = async () => {
   return result.data
 }
 
-export const updateMenuRequest = async (params: {
-  id: string;
-  name: string;
-  path: string;
-  iconclass: string;
-  parent: string | null
-}) => {
+export const updateMenuRequest = async (params: MenuFormParams & { id: string }) => {
   const result = await axios.post<BaseResponse>(API.menu.update, params)
   return result.data;
 }

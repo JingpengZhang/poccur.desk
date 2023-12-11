@@ -11,7 +11,7 @@ interface MenuItem extends IMenuItem {
   label?: string;
   icon?: ReactNode;
   type?: "group";
-  disable?: boolean;
+  disabled?: boolean;
 }
 
 const SideBar: React.FC = () => {
@@ -27,11 +27,17 @@ const SideBar: React.FC = () => {
     const loop = (menuList: MenuItem[]) => {
       for (let i = 0; i < menuList.length; i++) {
         const menuItem = menuList[i];
-        menuItem.label = menuItem.name;
-        menuItem.key = menuItem.id;
-        menuItem.icon = <i className={menuItem.iconclass}/>;
-        _menuList.push(menuItem)
-        if (menuItem.children) loop(menuItem.children);
+        if (menuItem.visible) {
+          menuItem.label = menuItem.name;
+          menuItem.key = menuItem.id;
+          menuItem.icon = <i className={menuItem.iconclass}/>;
+          menuItem.disabled = !menuItem.enable
+          _menuList.push(menuItem)
+          if (menuItem.children) loop(menuItem.children);
+        } else {
+          // @ts-ignore
+          menuList[i] = undefined
+        }
       }
     };
     loop(menus);

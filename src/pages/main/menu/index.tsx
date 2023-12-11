@@ -163,6 +163,7 @@ const Page: React.FC = () => {
         }).then(() => {
           message.success('删除成功')
           dispatch(fetchMenuTree())
+          CUDialogState.setUpdateId('')
         })
       }
     })

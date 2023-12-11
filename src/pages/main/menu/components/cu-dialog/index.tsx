@@ -1,18 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {Form, Input, message, Modal, Select, Space, TreeSelect} from "antd";
+import React, {useEffect} from "react";
+import {Form, Input, message, Modal, Select, Space, Switch, TreeSelect} from "antd";
 import IconList from "@/components/icon-list";
-import {createMenuRequest} from "@/services/menu.ts";
-import * as NProgress from "nprogress";
+import {createMenuRequest, MenuFormParams} from "@/services/menu.ts";
 import useLoading from "@/hooks/use-loading.ts";
 import {CUDialogProps} from "@/hooks/use-cu-dialog.ts";
 import useMenuTreeSelectOptions from "@/hooks/use-menu-tree-select-options.ts";
-
-interface FormValues {
-  name: string,
-  path: string,
-  iconclass: string,
-  parent: string
-}
 
 interface Props extends ChangeOneFiledToRequired<CUDialogProps<{
   parent: string | null
@@ -27,33 +19,25 @@ const CUDialog: React.FC<Props> = (props) => {
 
   const menuTree = useMenuTreeSelectOptions();
 
-  const [formData, setFormData] = useState({
-    name: '菜单管理3',
-    path: '/main/menu',
-    group: false,
-    iconclass: 'bi bi-tags',
-    parent: ''
-  })
-
   const [form] = Form.useForm();
 
   const loading = useLoading();
 
   const submit = () => {
-    form.validateFields().then((values: FormValues) => {
+    form.validateFields().then((values: MenuFormParams) => {
       const parent = values.parent === 'root' ? null : values.parent
-      NProgress.start();
       loading.setState(true)
       createMenuRequest({
         name: values.name,
         path: values.path,
         parent: parent,
-        iconclass: values.iconclass
+        iconclass: values.iconclass,
+        enable: values.enable,
+        visible: values.visible
       }).then(() => {
         message.success("创建成功")
       }).finally(() => {
         props.submitCallback();
-        NProgress.done();
         loading.setState(false)
         form.resetFields();
         props.closeDialogFn();
@@ -66,15 +50,10 @@ const CUDialog: React.FC<Props> = (props) => {
              onCancel={props.closeDialogFn}>
         <div className='py-4'>
           <Form form={form} labelCol={{span: 4}}>
-            <Form.Item label='父菜单' name='parent' rules={[{required: true}]}>
+            <Form.Item label='父菜单' name='parent' initialValue={'root'} rules={[{required: true}]}>
               <TreeSelect
                   placeholder='请选择父菜单'
                   treeData={menuTree}
-                  onChange={(value) => setFormData({
-                    ...formData,
-                    parent: value
-                  })
-                  }
                   fieldNames={{
                     value: 'key',
                     label: 'name',
@@ -82,7 +61,7 @@ const CUDialog: React.FC<Props> = (props) => {
               />
             </Form.Item>
             <Form.Item label='名称' name='name' rules={[{required: true}]}>
-              <Input value={formData.name} placeholder='请输入菜单名称'/>
+              <Input placeholder='请输入菜单名称'/>
             </Form.Item>
             <Form.Item label='路径' name='path' rules={[{required: true}]}>
               <Input placeholder='请输入菜单路径'/>
@@ -103,6 +82,12 @@ const CUDialog: React.FC<Props> = (props) => {
                 }
                 />
               </Space>
+            </Form.Item>
+            <Form.Item label='启用' name='enable' initialValue={true} required valuePropName="checked">
+              <Switch/>
+            </Form.Item>
+            <Form.Item label='可见' name='visible' initialValue={true} required valuePropName="checked">
+              <Switch/>
             </Form.Item>
           </Form>
         </div>

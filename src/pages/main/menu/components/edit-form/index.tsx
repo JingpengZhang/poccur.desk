@@ -1,74 +1,55 @@
 import React, {useEffect, useState} from "react";
-import {Button, Form, Input, message, Select, Space, TreeSelect} from "antd";
+import {Button, Form, Input, message, Select, Space, Switch, TreeSelect} from "antd";
 import IconList from "@/components/icon-list";
-import {updateMenuRequest} from "@/services/menu.ts";
+import {MenuFormParams, updateMenuRequest} from "@/services/menu.ts";
 import useLoading from "@/hooks/use-loading.ts";
-import * as NProgress from "nprogress";
 import {CUDialogProps} from "@/hooks/use-cu-dialog.ts";
 import useMenuTreeSelectOptions from "@/hooks/use-menu-tree-select-options.ts";
 
-interface FormValues {
-  name: string,
-  path: string,
-  iconclass: string,
-  parent: string
-}
-
-interface Props extends ChangeOneFiledToRequired<CUDialogProps<{
-  name: string;
-  iconclass: string;
-  path: string;
-  parent: string
-}>, 'submitCallback'> {
+interface Props extends ChangeOneFiledToRequired<CUDialogProps<MenuFormParams>, 'submitCallback'> {
 }
 
 
 const EditForm: React.FC<Props> = (props) => {
 
   useEffect(() => {
-    const {name, iconclass, parent, path} = props.data
+    const {name, iconclass, parent, path, visible, enable} = props.data
     form.setFieldValue('name', name)
     form.setFieldValue('iconclass', iconclass)
     form.setFieldValue('path', path)
     form.setFieldValue('parent', parent || 'root')
+    form.setFieldValue('visible', visible)
+    form.setFieldValue('enable', enable)
   }, [props.data])
 
   const menuTree = useMenuTreeSelectOptions();
-  
+
   const [showCover, setShowCover] = useState(true)
   useEffect(() => {
     setShowCover(!props.updateId)
   }, [props.updateId])
 
 
-  const [formData, setFormData] = useState({
-    name: '菜单管理3',
-    path: '/main/menu',
-    group: false,
-    iconclass: 'bi bi-tags',
-    parent: ''
-  })
-
   const [form] = Form.useForm();
 
   const loading = useLoading();
 
   const submit = () => {
-    form.validateFields().then((values: FormValues) => {
+    form.validateFields().then((values: MenuFormParams) => {
       const parent = values.parent === 'root' ? null : values.parent
-      NProgress.start();
       loading.setState(true)
       updateMenuRequest({
         id: props.updateId,
         name: values.name,
         path: values.path,
         parent: parent,
-        iconclass: values.iconclass
+        iconclass: values.iconclass,
+        enable: values.enable,
+        visible: values.visible
       }).then(() => {
         message.success("修改成功")
       }).finally(() => {
         props.submitCallback();
-        NProgress.done();
         loading.setState(false)
       })
     })
@@ -85,15 +66,10 @@ const EditForm: React.FC<Props> = (props) => {
               </div>
           }
           <Form form={form} labelCol={{span: 3}}>
-            <Form.Item label='父菜单' name='parent' rules={[{required: true}]}>
+            <Form.Item label='父菜单' name='parent' initialValue={'root'} rules={[{required: true}]}>
               <TreeSelect
                   placeholder='请选择父菜单'
                   treeData={menuTree}
-                  onChange={(value) => setFormData({
-                    ...formData,
-                    parent: value
-                  })
-                  }
                   fieldNames={{
                     value: 'key',
                     label: 'name',
@@ -101,7 +77,7 @@ const EditForm: React.FC<Props> = (props) => {
               />
             </Form.Item>
             <Form.Item label='名称' name='name' rules={[{required: true}]}>
-              <Input value={formData.name} placeholder='请输入菜单名称'/>
+              <Input placeholder='请输入菜单名称'/>
             </Form.Item>
             <Form.Item label='路径' name='path' rules={[{required: true}]}>
               <Input placeholder='请输入菜单路径'/>
@@ -122,6 +98,12 @@ const EditForm: React.FC<Props> = (props) => {
                 }
                 />
               </Space>
+            </Form.Item>
+            <Form.Item label='启用' name='enable' initialValue={true} required valuePropName="checked">
+              <Switch/>
+            </Form.Item>
+            <Form.Item label='可见' name='visible' initialValue={true} required valuePropName="checked">
+              <Switch/>
             </Form.Item>
           </Form>
           <div className=''>
