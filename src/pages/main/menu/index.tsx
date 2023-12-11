@@ -176,25 +176,28 @@ const Page: React.FC = () => {
               <Button onClick={resetSort} type='default' size='small'>重置</Button>
               <Button onClick={savaMenuIndex} type='primary' size='small'>保存</Button>
             </Space>
-            <Tree
-                className='bg-gray-50'
-                draggable
-                blockNode
-                treeData={dragTree as any}
-                showIcon
-                showLine
-                fieldNames={{
-                  title: 'name',
-                }}
-                onDrop={onDrop}
-                onSelect={(data, e) => {
-                  if (data) {
-                    editMenuItem(e.selectedNodes[0] as unknown as Menu)
-                  } else {
-                    editMenuItem(null)
-                  }
-                }}
-            />
+            {
+                dragTree.length > 0 && <Tree
+                    className='bg-gray-50'
+                    draggable
+                    blockNode
+                    treeData={dragTree as any}
+                    showIcon
+                    showLine
+                    fieldNames={{
+                      title: 'name',
+                    }}
+                    onDrop={onDrop}
+                    onSelect={(data, e) => {
+                      if (data) {
+                        editMenuItem(e.selectedNodes[0] as unknown as Menu)
+                      } else {
+                        editMenuItem(null)
+                      }
+                    }}
+                    defaultExpandAll
+                />
+            }
           </div>
 
 
