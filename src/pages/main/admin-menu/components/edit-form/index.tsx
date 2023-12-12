@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Form, Input, message, Select, Space, Switch, TreeSelect} from "antd";
 import IconList from "@/components/icon-list";
-import {MenuFormParams, updateMenuRequest} from "@/services/menu.ts";
+import {MenuFormParams, updateMenuRequest} from "@/services/admin/menu.ts";
 import useLoading from "@/hooks/use-loading.ts";
 import {CUDialogProps} from "@/hooks/use-cu-dialog.ts";
 import useMenuTreeSelectOptions from "@/hooks/use-menu-tree-select-options.ts";

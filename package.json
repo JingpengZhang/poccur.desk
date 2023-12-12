@@ -10,6 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@reduxjs/toolkit": "^2.0.1",
     "@tauri-apps/api": "^1.5.1",
     "antd": "^5.12.1",

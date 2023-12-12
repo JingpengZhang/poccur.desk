@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
-import TopBar from "@/components/common/top-bar";
-import SideBar from "@/components/common/side-bar";
+import TopBar from "@/components/top-bar";
+import SideBar from "@/components/side-bar";
 
 const Main = () => {
   return (

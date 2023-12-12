@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, message, Modal, notification, Space, Tag, Tree,} from "antd";
-import {deleteMenuRequest, Menu, MenuIndexObj, updateMenuIndexesRequest} from "@/services/menu.ts";
+import {deleteMenuRequest, Menu, MenuIndexObj, updateMenuIndexesRequest} from "@/services/admin/menu.ts";
 import CUDialog from "./components/cu-dialog";
 import useCuDialog from "@/hooks/use-cu-dialog.ts";
 import AntdUtils from "@/utils/antd-utils.ts";
@@ -8,8 +8,9 @@ import type {TreeProps, DataNode} from 'antd/es/tree'
 import EditForm from "@/pages/main/admin-menu/components/edit-form";
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import * as NProgress from 'nprogress'
-import {useAppDispatch, useAppSelector} from "@/hooks/useRedux.ts";
+import {useAppDispatch, useAppSelector} from "@/hooks/use-redux.ts";
 import {fetchMenuTree} from "@/store/main";
+import {PlusOutlined} from "@ant-design/icons";
 
 const Page: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -205,7 +206,7 @@ const Page: React.FC = () => {
           <div className='flex-grow'>
             <div className='flex items-center'>
               <Button onClick={() => CUDialogState.openDialog()} type='primary'
-                      icon={<i className="bi bi-plus-square"></i>}>添加菜单项</Button>
+                      icon={<PlusOutlined/>}>添加菜单项</Button>
             </div>
             {
                 CUDialogState.updateId &&

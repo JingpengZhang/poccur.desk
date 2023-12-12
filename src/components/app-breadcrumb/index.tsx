@@ -1,5 +1,5 @@
 import {Breadcrumb} from "antd";
-import {useAppDispatch, useAppSelector} from "@/hooks/useRedux.ts";
+import {useAppDispatch, useAppSelector} from "@/hooks/use-redux.ts";
 import {initialBreadcrumbItems, setBreadcrumbItems} from "@/store/main";
 import {useNavigate} from "react-router-dom";
 

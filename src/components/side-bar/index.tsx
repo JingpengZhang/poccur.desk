@@ -1,8 +1,8 @@
 import {Menu} from "antd";
 import React, {ReactNode, useMemo, useState} from "react";
 import AntdUtils from "@/utils/antd-utils.ts";
-import {useAppDispatch, useAppSelector} from "@/hooks/useRedux.ts";
-import type {Menu as IMenuItem} from '@/services/menu.ts'
+import {useAppDispatch, useAppSelector} from "@/hooks/use-redux.ts";
+import type {Menu as IMenuItem} from '@/services/admin/menu.ts'
 import {useNavigate} from "react-router-dom";
 import {BreadCrumbItem} from "@/components/app-breadcrumb";
 import {setBreadcrumbItems} from "@/store/main";

@@ -23,25 +23,25 @@ export interface MenuFormParams {
 }
 
 export const createMenuRequest = async (params: MenuFormParams) => {
-  const result = await axios.post<BaseResponse>(API.menu.create, params)
+  const result = await axios.post<BaseResponse>(API.AdminAPI.menu.create, params)
   return result.data
 }
 
 
 export const getMenuListRequest = async (queries?: ListQueries) => {
-  const result = await axios.get<ListResponseData<Menu>>(API.menu.list, queries)
+  const result = await axios.get<ListResponseData<Menu>>(API.AdminAPI.menu.list, queries)
   return result.data
 }
 
 export const getMenuTreeRequest = async () => {
   const result = await axios.get<BaseResponseWithData<{
     menuTree: Menu[]
-  }>>(API.menu.tree)
+  }>>(API.AdminAPI.menu.tree)
   return result.data
 }
 
 export const updateMenuRequest = async (params: MenuFormParams & { id: string }) => {
-  const result = await axios.post<BaseResponse>(API.menu.update, params)
+  const result = await axios.post<BaseResponse>(API.AdminAPI.menu.update, params)
   return result.data;
 }
 
@@ -54,13 +54,13 @@ export interface MenuIndexObj {
 export const updateMenuIndexesRequest = async (params: {
   indexes: MenuIndexObj[]
 }) => {
-  const result = await axios.post<BaseResponse>(API.menu.updateIndex, params)
+  const result = await axios.post<BaseResponse>(API.AdminAPI.menu.updateIndex, params)
   return result.data
 }
 
 export const deleteMenuRequest = async (params: {
   ids: string[]
 }) => {
-  const result = await axios.post<BaseResponse>(API.menu.delete, params)
+  const result = await axios.post<BaseResponse>(API.AdminAPI.menu.delete, params)
   return result.data
 }

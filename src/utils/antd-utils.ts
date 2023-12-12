@@ -1,4 +1,6 @@
 import React from "react";
+import {Modal, notification} from "antd";
+import axios from "@/axios/axios.ts";
 
 class AntdUtils {
   constructor() {
@@ -35,6 +37,36 @@ class AntdUtils {
     loop(treeDataClone)
 
     return treeDataClone
+  }
+
+
+  /**
+   * 通过 id 数组删除项目时,弹出确认弹窗
+   * @param api 删除请求的 API 地址
+   * @param ids 待删除项目 id 数组
+   * @param onSuccess 删除成功回调
+   * @param onFailed 删除失败回调
+   */
+  static deleteItemsByIdsConfirm(api: string, ids: string[], onSuccess?: () => void, onFailed?: () => void) {
+    Modal.confirm({
+      content: '确认删除' + (ids.length === 1 ? '该' : '所选') + '项?请谨慎操作.',
+      onOk() {
+        return new Promise((resolve, reject) => {
+          axios.post(api, {
+            ids,
+          }).then(() => {
+            notification.success({
+              message: '删除成功'
+            })
+            onSuccess && onSuccess();
+            resolve(null)
+          }).catch(() => {
+            onFailed && onFailed();
+            reject()
+          })
+        })
+      }
+    })
   }
 }
 

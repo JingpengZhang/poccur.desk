@@ -21,3 +21,7 @@ interface BaseResponseWithData<T> {
   data: T
 }
 
+interface DeleteQueries {
+  ids: string[],
+  all?: boolean
+}

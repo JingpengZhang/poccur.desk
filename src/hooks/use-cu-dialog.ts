@@ -39,7 +39,7 @@ const UseCuDialog = <T>(options: {
       setData(options?.data || initialData)
     } else {
       if (options && options.data && options.updateId) {
-        setData(data)
+        setData(options.data)
         setUpdateId(options.updateId)
       } else {
         return message.warning('DEV:请传入需要修改的数据,及修改对象的ID')

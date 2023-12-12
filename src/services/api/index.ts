@@ -1,12 +1,9 @@
+import AdminAPI from "@/services/api/admin.ts";
+import ClientAPI from "@/services/api/client.ts";
+
 const API = {
-  menu: {
-    create: '/menu/create',
-    list: '/menu/list',
-    tree: '/menu/tree',
-    update: '/menu/update',
-    updateIndex: "/menu/update_index",
-    delete: "/menu/delete"
-  }
+  AdminAPI,
+  ClientAPI
 }
 
 export default API

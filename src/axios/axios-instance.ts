@@ -3,13 +3,14 @@ import {message} from "antd";
 import * as NProgress from "nprogress";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/admin'
+  baseURL: 'http://localhost:3000'
 });
 
 // 错误处理函数
 const handleErr = (error: AxiosError) => {
   const {response} = error
   message.error((response!.data as any).message)
+  NProgress.done()
   return Promise.reject(error);
 };
 
