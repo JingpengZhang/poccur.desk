@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {getMenuTreeRequest, Menu} from "@/services/admin/menu.ts";
-import {BreadCrumbItem} from "@/components/app-breadcrumb";
+import {BreadCrumbItem} from "@/components/breadcrumb";
 
 interface InitialState {
   menuTree: Menu[],

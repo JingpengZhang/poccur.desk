@@ -10,6 +10,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {useAppDispatch, useAppSelector} from "@/hooks/use-redux.ts";
 import {fetchMenuTree} from "@/store/main";
 import {PlusOutlined} from "@ant-design/icons";
+import InsidePage from "@/components/inside-page";
 
 const Page: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -172,8 +173,9 @@ const Page: React.FC = () => {
   }
 
   return (
-      <div className='w-full'>
-        <div className='flex justify-between '>
+      <InsidePage extractRender={<Button onClick={() => CUDialogState.openDialog()} type='primary'
+                                         icon={<PlusOutlined/>}>添加菜单项</Button>}>
+        <div className='flex justify-between'>
           <div className='border rounded-md p-3 w-64 bg-gray-50 flex-shrink-0 mr-4'>
             <Space className='mb-3'>
               <Button onClick={resetSort} type='default' size='small'>重置</Button>
@@ -206,13 +208,9 @@ const Page: React.FC = () => {
 
 
           <div className='flex-grow'>
-            <div className='flex items-center'>
-              <Button onClick={() => CUDialogState.openDialog()} type='primary'
-                      icon={<PlusOutlined/>}>添加菜单项</Button>
-            </div>
             {
                 CUDialogState.updateId &&
-                <div className='w-full rounded-md border flex items-center justify-between mt-4 p-3 text-sm'>
+                <div className='w-full rounded-md border flex items-center justify-between mb-4 p-3 text-sm'>
                   <Space>
                     <span>当前菜单项ID: </span>
                     <Tag className='' color='blue'>{CUDialogState.updateId}</Tag>
@@ -241,7 +239,7 @@ const Page: React.FC = () => {
         </div>
         <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog}
                   submitCallback={() => dispatch(fetchMenuTree())}/>
-      </div>
+      </InsidePage>
   )
 }
 

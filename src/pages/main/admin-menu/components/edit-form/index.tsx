@@ -56,7 +56,7 @@ const EditForm: React.FC<Props> = (props) => {
   }
 
   return (
-      <div className='w-full border rounded-md mt-4 p-3'>
+      <div className='w-full border rounded-md p-3'>
         <p className='mt-1 mb-3 px-3 font-bold'>修改菜单项</p>
         <div className='relative rounded-md overflow-hidden p-3'>
           {

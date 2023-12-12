@@ -15,6 +15,7 @@ import TableModule, {
   OperateButton,
   ReplicableIDColumn, TableButton
 } from "@/components/table-module";
+import InsidePage from "@/components/inside-page";
 
 const Page: React.FC = () => {
 
@@ -57,7 +58,7 @@ const Page: React.FC = () => {
 
   const antdTablePaginationConfig = useAntdTablePaginationConfig(paginationState)
 
-  return <>
+  return <InsidePage>
     <TableModule<ArticleCategory>
         name='博文分类'
         operateRender={
@@ -116,7 +117,7 @@ const Page: React.FC = () => {
     />
 
     <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog} submitCallback={getList}/>
-  </>
+  </InsidePage>
 }
 
 export default Page
