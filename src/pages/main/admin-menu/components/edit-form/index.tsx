@@ -5,6 +5,7 @@ import {MenuFormParams, updateMenuRequest} from "@/services/admin/menu.ts";
 import useLoading from "@/hooks/use-loading.ts";
 import {CUDialogProps} from "@/hooks/use-cu-dialog.ts";
 import useMenuTreeSelectOptions from "@/hooks/use-menu-tree-select-options.ts";
+import Card from "@/components/card";
 
 interface Props extends ChangeOneFiledToRequired<CUDialogProps<MenuFormParams>, 'submitCallback'> {
 }
@@ -56,12 +57,11 @@ const EditForm: React.FC<Props> = (props) => {
   }
 
   return (
-      <div className='w-full border rounded-md p-3'>
-        <p className='mt-1 mb-3 px-3 font-bold'>修改菜单项</p>
+      <Card title='修改菜单项'>
         <div className='relative rounded-md overflow-hidden p-3'>
           {
               showCover &&
-              <div className='absolute top-0 left-0 bg-gray-100 w-full h-full z-10 flex items-center justify-center'>
+              <div className='absolute top-0 left-0 bg-gray-50 w-full h-full z-10 flex items-center justify-center'>
                 <p className='text-gray-400'>请在右侧选择要修改的菜单项</p>
               </div>
           }
@@ -110,7 +110,7 @@ const EditForm: React.FC<Props> = (props) => {
             <Button onClick={submit} type='primary' loading={loading.state}>提交</Button>
           </div>
         </div>
-      </div>
+      </Card>
   )
 }
 

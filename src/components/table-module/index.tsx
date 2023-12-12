@@ -2,6 +2,7 @@ import {Space, TableProps, Table, notification, Button} from "antd";
 import React from "react";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
+import Card from "@/components/card";
 
 interface Props<T extends object> {
   name?: string;
@@ -11,19 +12,17 @@ interface Props<T extends object> {
 
 const TableModule = <T extends object>(props: Props<T>) => {
   return (
-      <section className='border bg-white rounded  shadow table-module'>
-        <Space className='py-4 px-6 flex items-center justify-between'>
-          <Space>
-            <h2 className='font-bold flex items-center before:block before:w-2 before:aspect-square before:bg-primary before:rounded-full before:mr-3'>
-              {props.name}
-            </h2>
-          </Space>
-          {props.operateRender}
-        </Space>
+      <Card
+          className='table-module'
+          title={props.name}
+          extractRender={
+            props.operateRender
+          }>
         <Table
             {...props.tableProps}
         />
-      </section>
+      </Card>
+
   )
 }
 

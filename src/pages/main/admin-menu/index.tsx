@@ -11,6 +11,7 @@ import {useAppDispatch, useAppSelector} from "@/hooks/use-redux.ts";
 import {fetchMenuTree} from "@/store/main";
 import {PlusOutlined} from "@ant-design/icons";
 import InsidePage from "@/components/inside-page";
+import Card from "@/components/card";
 
 const Page: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -176,7 +177,7 @@ const Page: React.FC = () => {
       <InsidePage extractRender={<Button onClick={() => CUDialogState.openDialog()} type='primary'
                                          icon={<PlusOutlined/>}>添加菜单项</Button>}>
         <div className='flex justify-between'>
-          <div className='border rounded-md p-3 w-64 bg-gray-50 flex-shrink-0 mr-4'>
+          <Card className='p-4 w-64 flex-shrink-0 mr-4' noHeader>
             <Space className='mb-3'>
               <Button onClick={resetSort} type='default' size='small'>重置</Button>
               <Button onClick={savaMenuIndex} type='primary' size='small'>保存</Button>
@@ -184,7 +185,6 @@ const Page: React.FC = () => {
             {
                 dragTree.length > 0 &&
                 <Tree
-                    className='bg-gray-50'
                     draggable
                     blockNode
                     treeData={dragTree as any}
@@ -204,32 +204,34 @@ const Page: React.FC = () => {
                     defaultExpandAll
                 />
             }
-          </div>
+          </Card>
 
 
           <div className='flex-grow'>
             {
                 CUDialogState.updateId &&
-                <div className='w-full rounded-md border flex items-center justify-between mb-4 p-3 text-sm'>
-                  <Space>
-                    <span>当前菜单项ID: </span>
-                    <Tag className='' color='blue'>{CUDialogState.updateId}</Tag>
-                    <div className='cursor-pointer'>
-                      <CopyToClipboard onCopy={onCopy} text={CUDialogState.updateId}>
-                        <i className="bi bi-copy hover:text-blue-600 transition-all"/>
-                      </CopyToClipboard>
-                    </div>
-                  </Space>
-                  <Space>
-                    <i
-                        onClick={() => addMenuItem(CUDialogState.updateId)}
-                        title='添加子菜单'
-                        className="bi bi-node-plus cursor-pointer hover:text-blue-600 transition-all"></i>
-                    <i onClick={() => deleteOne(CUDialogState.updateId)} title='删除'
-                       className="bi bi-trash3 cursor-pointer hover:text-red-600 transition-all"></i>
+                <Card className=' mb-4 p-3 text-sm' noHeader>
+                  <Space className='flex items-center justify-between'>
+                    <Space>
+                      <span>当前菜单项ID: </span>
+                      <Tag className='' color='blue'>{CUDialogState.updateId}</Tag>
+                      <div className='cursor-pointer'>
+                        <CopyToClipboard onCopy={onCopy} text={CUDialogState.updateId}>
+                          <i className="bi bi-copy hover:text-blue-600 transition-all"/>
+                        </CopyToClipboard>
+                      </div>
+                    </Space>
+                    <Space>
+                      <i
+                          onClick={() => addMenuItem(CUDialogState.updateId)}
+                          title='添加子菜单'
+                          className="bi bi-node-plus cursor-pointer hover:text-blue-600 transition-all"></i>
+                      <i onClick={() => deleteOne(CUDialogState.updateId)} title='删除'
+                         className="bi bi-trash3 cursor-pointer hover:text-red-600 transition-all"></i>
+                    </Space>
                   </Space>
 
-                </div>
+                </Card>
             }
             <EditForm {...CUDialogState} closeDialogFn={CUDialogState.closeDialog}
                       submitCallback={() => dispatch(fetchMenuTree())}/>
