@@ -12,7 +12,7 @@ interface Props<T extends object> {
 const TableModule = <T extends object>(props: Props<T>) => {
   return (
       <section className='border bg-white rounded  shadow table-module'>
-        <Space className='p-4  flex items-center justify-between'>
+        <Space className='py-4 px-6 flex items-center justify-between'>
           <Space>
             <h2 className='font-bold flex items-center before:block before:w-2 before:aspect-square before:bg-primary before:rounded-full before:mr-3'>
               {props.name}

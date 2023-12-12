@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Button, message, Modal, notification, Space, Tag, Tree,} from "antd";
+import {Button, Modal, notification, Space, Tag, Tree,} from "antd";
 import {deleteMenuRequest, Menu, MenuIndexObj, updateMenuIndexesRequest} from "@/services/admin/menu.ts";
 import CUDialog from "./components/cu-dialog";
 import useCuDialog from "@/hooks/use-cu-dialog.ts";
 import AntdUtils from "@/utils/antd-utils.ts";
 import type {TreeProps, DataNode} from 'antd/es/tree'
-import EditForm from "@/pages/main/admin-menu/components/edit-form";
+import EditForm from "./components/edit-form";
 import {CopyToClipboard} from 'react-copy-to-clipboard'
-import * as NProgress from 'nprogress'
 import {useAppDispatch, useAppSelector} from "@/hooks/use-redux.ts";
 import {fetchMenuTree} from "@/store/main";
 import {PlusOutlined} from "@ant-design/icons";
@@ -144,13 +143,13 @@ const Page: React.FC = () => {
 
     loop(dragTree, null);
 
-    NProgress.start()
     updateMenuIndexesRequest({
       indexes: result
     }).then(() => {
-      message.success('更新成功')
-    }).finally(() => {
-      NProgress.done()
+      notification.success({
+        message: '更新成功'
+      })
+      dispatch(fetchMenuTree())
     })
   }
 
@@ -162,7 +161,9 @@ const Page: React.FC = () => {
         deleteMenuRequest({
           ids: [id]
         }).then(() => {
-          message.success('删除成功')
+          notification.success({
+            message: '删除成功'
+          })
           dispatch(fetchMenuTree())
           CUDialogState.setUpdateId('')
         })
@@ -179,7 +180,8 @@ const Page: React.FC = () => {
               <Button onClick={savaMenuIndex} type='primary' size='small'>保存</Button>
             </Space>
             {
-                dragTree.length > 0 && <Tree
+                dragTree.length > 0 &&
+                <Tree
                     className='bg-gray-50'
                     draggable
                     blockNode
@@ -239,9 +241,8 @@ const Page: React.FC = () => {
         </div>
         <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog}
                   submitCallback={() => dispatch(fetchMenuTree())}/>
-
       </div>
   )
 }
 
-export default Page
+export default Page;

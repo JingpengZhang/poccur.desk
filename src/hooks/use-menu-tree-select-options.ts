@@ -1,4 +1,4 @@
-import {useAppSelector} from "@/hooks/useRedux.ts";
+import {useAppSelector} from "@/hooks/use-redux.ts";
 import {useMemo} from "react";
 import AntdUtils from "@/utils/antd-utils.ts";
 
