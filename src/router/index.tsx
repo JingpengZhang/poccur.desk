@@ -1,11 +1,16 @@
 import {createBrowserRouter} from "react-router-dom";
 import {lazy, Suspense} from "react";
+
+import ErrorPage from "@/pages/error";
+
 import LoginPage from "@/pages/login";
+
 
 const MainPage = lazy(() => import('@/pages/main'))
 
 const AdminMenu = lazy(() => import('@/pages/main/admin-menu'))
 const ArticleCategory = lazy(() => import("@/pages/main/article-category"))
+
 
 const router = createBrowserRouter([
   {
@@ -28,7 +33,7 @@ const router = createBrowserRouter([
             element: <Suspense>
               <ArticleCategory/>
             </Suspense>,
-          }
+          },
         ]
       },
       {
@@ -42,9 +47,10 @@ const router = createBrowserRouter([
         element: <Suspense>
           <LoginPage/>
         </Suspense>,
-      }
-    ]
-  }
+      },
+    ],
+    errorElement: <ErrorPage/>
+  },
 ])
 
 export default router
