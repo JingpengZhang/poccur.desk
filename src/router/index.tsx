@@ -1,7 +1,8 @@
 import {createBrowserRouter} from "react-router-dom";
 import {lazy, Suspense} from "react";
 
-import ErrorPage from "@/pages/error";
+import ErrorRouterPage from "@/pages/error/error-router";
+import ErrorNetworkPage from "@/pages/error/error-network";
 
 import LoginPage from "@/pages/login";
 
@@ -49,8 +50,12 @@ const router = createBrowserRouter([
         </Suspense>,
       },
     ],
-    errorElement: <ErrorPage/>
+    errorElement: <ErrorRouterPage/>
   },
+  {
+    path: '/error-network',
+    element: <ErrorNetworkPage/>
+  }
 ])
 
 export default router

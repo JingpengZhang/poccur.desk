@@ -9,13 +9,23 @@ const axiosInstance = axios.create({
 // 错误处理函数
 const handleErr = (error: AxiosError) => {
   const {response} = error
-  message.error((response!.data as any).message)
+  if (response) {
+    message.error((response!.data as any).message)
+  }
   NProgress.done()
+  if (error.code === "ERR_NETWORK") {
+    window.location.pathname = '/error-network'
+  }
   return Promise.reject(error);
 };
 
 // 请求拦截器
 axiosInstance.interceptors.request.use((config) => {
+
+  if (window.location.pathname === '/error-network') {
+    return Promise.reject('ERR_NETWORK')
+  }
+
   NProgress.start();
   config.headers.token = '';
   return config
