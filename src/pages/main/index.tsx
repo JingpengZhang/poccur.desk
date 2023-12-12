@@ -8,7 +8,7 @@ const Main = () => {
         <TopBar/>
         <section className='flex flex-grow'>
           <SideBar/>
-          <section className=' flex-grow p-4'>
+          <section className=' flex-grow p-4 bg-mainBg'>
             <Outlet/>
           </section>
         </section>

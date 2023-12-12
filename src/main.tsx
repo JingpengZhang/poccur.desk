@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import '@/assets/styles/preflight.css'
+import "@/assets/styles/antd-modification.css"
 import "@/assets/styles/app.css"
 import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import {ConfigProvider} from "antd";

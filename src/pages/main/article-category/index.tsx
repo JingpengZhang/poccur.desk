@@ -1,19 +1,20 @@
 import React, {useEffect, useState} from "react";
-import {Space, Table} from "antd";
+import {Space} from "antd";
 import CUDialog from "@/pages/main/article-category/components/cu-dialog";
 import useCuDialog from "@/hooks/use-cu-dialog.ts";
 import {
   ArticleCategory,
   getArticleCategoryListRequest
 } from "@/services/client/article-category.ts";
-import IconButton from "@/components/icon-button";
 import API from "@/services/api";
 import AntdUtils from "@/utils/antd-utils.ts";
-import AntdIconButton from "@/components/antd-icon-button";
 import usePagination from "@/hooks/use-pagination.ts";
-import AntdTableIdWithCopy from "@/components/antd-table-id-with-copy";
 import useAntdTableSelect from "@/hooks/use-antd-table-select.ts";
 import useAntdTablePaginationConfig from "@/hooks/use-antd-table-pagination-config.tsx";
+import TableModule, {
+  OperateButton,
+  ReplicableIDColumn, TableButton
+} from "@/components/table-module";
 
 const Page: React.FC = () => {
 
@@ -56,52 +57,66 @@ const Page: React.FC = () => {
 
   const antdTablePaginationConfig = useAntdTablePaginationConfig(paginationState)
 
-  return <section>
-    <Space className='mb-4'>
-      <AntdIconButton label='添加分类' type='create' onClick={() => CUDialogState.openDialog()}/>
-      {antdTableSelect.selectedKeys.length !== 0 &&
-          <AntdIconButton type='delete' onClick={() => handleDelete(antdTableSelect.selectedKeys)}/>}
-    </Space>
-    <Table
-        rowKey='id'
-        dataSource={list}
-        rowSelection={antdTableSelect.tableRowSelection}
-        pagination={antdTablePaginationConfig}
-        columns={[
-          {
-            title: 'ID',
-            dataIndex: 'id',
-            width: 220,
-            render: (value) => <AntdTableIdWithCopy id={value}/>
-          },
-          {
-            title: '名称',
-            dataIndex: 'name',
-          },
-          {
-            title: '别名',
-            dataIndex: 'alias',
-          },
-          {
-            title: '描述',
-            dataIndex: 'description',
-          },
-          {
-            title: '操作',
-            dataIndex: 'actions',
-            render: (_, rowData) => <Space>
-              <IconButton onClick={() => CUDialogState.openDialog('update', {
-                data: rowData,
-                updateId: rowData.id
-              })} type='edit'/>
-              <IconButton onClick={() => handleDelete([rowData.id])} type='delete'/>
-            </Space>
-          },
-        ]}
+  return <>
+    <TableModule<ArticleCategory>
+        name='博文分类'
+        operateRender={
+          <Space>
+            <OperateButton.Create
+                name='添加分类 '
+                onClick={() => CUDialogState.openDialog()}
+            />
+            {antdTableSelect.selectedKeys.length !== 0 &&
+                <OperateButton.Delete
+                    onClick={() => handleDelete(antdTableSelect.selectedKeys)}
+                />
+            }
+          </Space>
+        }
+        tableProps={{
+          rowKey: 'id',
+          dataSource: list,
+          rowSelection: antdTableSelect.tableRowSelection,
+          pagination: antdTablePaginationConfig,
+          columns: [
+            {
+              title: 'ID',
+              dataIndex: 'id',
+              width: 220,
+              render: (value) => <ReplicableIDColumn id={value}/>
+            },
+            {
+              title: '名称',
+              dataIndex: 'name',
+            },
+            {
+              title: '别名',
+              dataIndex: 'alias',
+            },
+            {
+              title: '描述',
+              dataIndex: 'description',
+            },
+            {
+              title: '操作',
+              dataIndex: 'actions',
+              width: 160,
+              render: (_, rowData) => <Space>
+                <TableButton.Edit
+                    onClick={() => CUDialogState.openDialog('update', {
+                      data: rowData,
+                      updateId: rowData.id
+                    })}/>
+                <TableButton.Delete
+                    onClick={() => handleDelete([rowData.id])}/>
+              </Space>
+            },
+          ]
+        }}
     />
 
     <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog} submitCallback={getList}/>
-  </section>
+  </>
 }
 
 export default Page
