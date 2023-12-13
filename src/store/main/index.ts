@@ -3,6 +3,7 @@ import {getMenuTreeRequest, Menu} from "@/services/admin/menu.ts";
 import {BreadCrumbItem} from "@/components/breadcrumb";
 
 interface InitialState {
+  token: string,
   menuTree: Menu[],
   breadcrumbItems: BreadCrumbItem[]
 }
@@ -17,6 +18,7 @@ export const initialBreadcrumbItems: BreadCrumbItem[] = [
 ]
 
 const initialState: InitialState = {
+  token: '',
   menuTree: [],
   breadcrumbItems: initialBreadcrumbItems
 }
@@ -30,6 +32,9 @@ export const mainSlice = createSlice({
   name: "main",
   initialState,
   reducers: {
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = 'Bearer ' + action.payload
+    },
     setBreadcrumbItems: (state, action: PayloadAction<BreadCrumbItem[]>) => {
       state.breadcrumbItems = initialBreadcrumbItems.concat(action.payload)
     }
@@ -48,5 +53,5 @@ export const mainSlice = createSlice({
   }
 })
 
-export const {setBreadcrumbItems} = mainSlice.actions
+export const {setBreadcrumbItems, setToken} = mainSlice.actions
 export default mainSlice.reducer

@@ -10,7 +10,7 @@ const ErrorRouterPage: React.FC = () => {
   const state = useMemo(() => {
     let message;
     switch (error.status) {
-      case 400:
+      case 404:
         message = '页面未找到!'
         break;
       default :

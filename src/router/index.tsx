@@ -3,6 +3,7 @@ import {lazy, Suspense} from "react";
 
 import ErrorRouterPage from "@/pages/error/error-router";
 import ErrorNetworkPage from "@/pages/error/error-network";
+import UnauthorizedPage from "@/pages/error/unauthorized";
 
 import LoginPage from "@/pages/login";
 
@@ -55,7 +56,11 @@ const router = createBrowserRouter([
   {
     path: '/error-network',
     element: <ErrorNetworkPage/>
-  }
+  }, {
+    path: '/unauthorized',
+    element: <UnauthorizedPage/>
+  },
+
 ])
 
 export default router

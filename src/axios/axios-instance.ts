@@ -1,6 +1,7 @@
 import axios, {AxiosError} from "axios";
 import {message} from "antd";
 import * as NProgress from "nprogress";
+import {store} from "@/store";
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:3000'
@@ -11,11 +12,15 @@ const handleErr = (error: AxiosError) => {
   const {response} = error
   if (response) {
     message.error((response!.data as any).message)
+    if (response.status === 401) {
+      window.location.pathname = '/unauthorized'
+    }
   }
   NProgress.done()
   if (error.code === "ERR_NETWORK") {
     window.location.pathname = '/error-network'
   }
+
   return Promise.reject(error);
 };
 
@@ -27,7 +32,9 @@ axiosInstance.interceptors.request.use((config) => {
   }
 
   NProgress.start();
-  config.headers.token = '';
+
+  config.headers.Authorization = store.getState().main.token;
+
   return config
 }, handleErr)
 
