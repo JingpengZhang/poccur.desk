@@ -9,11 +9,17 @@
     border-top: 1px solid #e5e7eb;
 }
 
-body{
+body {
     color: #333;
 }
 
 
 @layer component {
+    .flex-center {
+        @apply flex items-center justify-center;
+    }
 
+    .flex-between {
+        @apply flex items-center justify-between;
+    }
 }
