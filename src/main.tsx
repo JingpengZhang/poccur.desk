@@ -16,7 +16,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ConfigProvider locale={zhCN}>
+          <ConfigProvider locale={zhCN}
+            theme={{
+              token:{
+                colorPrimary:'#1767f5'
+              }
+            }}
+          >
             <App/>
           </ConfigProvider>
         </PersistGate>

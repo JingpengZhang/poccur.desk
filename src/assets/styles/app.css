@@ -13,6 +13,19 @@ body {
     color: #333;
 }
 
+@layer base {
+    @font-face {
+        font-family: 'ApexMk2';
+        src: url('/public/fonts/ApexMk2/Regular.otf') format("opentype");
+        font-weight: 400;
+    }
+    @font-face {
+        font-family: 'ApexMk2';
+        src: url('/public/fonts/ApexMk2/BoldExtended.otf') format("opentype");
+        font-weight: 800;
+    }
+}
+
 
 @layer component {
     .flex-center {
