@@ -1,5 +1,6 @@
 import axios from "@/axios/axios.ts";
 import API from "@/services/api";
+import {Role} from "@/libs/role.enum.ts";
 
 const {AuthAPI} = API
 
@@ -26,10 +27,25 @@ export interface UserInfo {
   description: string,
 }
 
+export interface SignInResponseData {
+  token: string,
+  userInfo: UserInfo
+}
+
 export const signInRequest = async (params: SignInFormParams) => {
-  const result = await axios.post<BaseResponseWithData<{
-    token: string,
-    userInfo: UserInfo
-  }>>(AuthAPI.signIn, params)
+  const result = await axios.post<BaseResponseWithData<SignInResponseData>>(AuthAPI.signIn, params)
+  return result.data
+}
+
+export interface SignUpParams {
+  email: string;
+  password: string;
+  username?: string;
+  autoSignIn?: boolean;
+  roles?: Role[];
+}
+
+export const signUpRequest = async (params: SignUpParams) => {
+  const result = await axios.post<BaseResponseWithData<SignInResponseData>>(AuthAPI.signUp, params)
   return result.data
 }

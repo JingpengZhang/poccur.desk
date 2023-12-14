@@ -2,11 +2,19 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {getMenuTreeRequest, Menu} from "@/services/admin/menu.ts";
 import {BreadCrumbItem} from "@/components/breadcrumb";
 
+export interface RememberAccount {
+  enable: boolean,
+  email: string,
+  password: string
+}
+
 interface InitialState {
   token: string,
   menuTree: Menu[],
-  breadcrumbItems: BreadCrumbItem[]
+  breadcrumbItems: BreadCrumbItem[],
+  rememberAccount: RememberAccount
 }
+
 
 export const initialBreadcrumbItems: BreadCrumbItem[] = [
   {
@@ -20,7 +28,12 @@ export const initialBreadcrumbItems: BreadCrumbItem[] = [
 const initialState: InitialState = {
   token: '',
   menuTree: [],
-  breadcrumbItems: initialBreadcrumbItems
+  breadcrumbItems: initialBreadcrumbItems,
+  rememberAccount: {
+    enable: false,
+    email: '',
+    password: ''
+  }
 }
 
 export const fetchMenuTree = createAsyncThunk('main/getMenuTree', async () => {
@@ -35,9 +48,12 @@ export const mainSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.token = 'Bearer ' + action.payload
     },
+    setRememberAccount: (state, action: PayloadAction<RememberAccount>) => {
+      state.rememberAccount = action.payload
+    },
     setBreadcrumbItems: (state, action: PayloadAction<BreadCrumbItem[]>) => {
       state.breadcrumbItems = initialBreadcrumbItems.concat(action.payload)
-    }
+    },
   },
   extraReducers(builder) {
     builder
@@ -53,5 +69,5 @@ export const mainSlice = createSlice({
   }
 })
 
-export const {setBreadcrumbItems, setToken} = mainSlice.actions
+export const {setBreadcrumbItems, setToken, setRememberAccount} = mainSlice.actions
 export default mainSlice.reducer

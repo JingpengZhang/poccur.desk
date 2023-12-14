@@ -21,6 +21,10 @@ const axios = {
   },
 
   post<T>(url: string, params?: Object) {
+    for (const paramsKey in params) {
+      // @ts-ignore
+      if(!params[paramsKey]) params[paramsKey] = undefined
+    }
     return axiosInstance.post<T>(url, params)
   }
 }

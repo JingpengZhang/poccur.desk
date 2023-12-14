@@ -1,5 +1,4 @@
 import {Role} from "@/libs/role.enum.ts";
-
 interface RolesFormat {
   name: string,
   color: string,

@@ -3,6 +3,8 @@ import CommonUtils from "@/utils/common-utils.ts";
 import {Role} from "@/libs/role.enum.ts";
 import {Avatar, Popover} from "antd";
 import {useAppSelector} from "@/hooks/use-redux.ts";
+import {useNavigate} from "react-router-dom";
+import {persistor} from "@/store";
 
 interface Setting {
   name: string;
@@ -11,6 +13,8 @@ interface Setting {
 }
 
 const UserInfoAndSetting: React.FC = () => {
+
+  const navigate = useNavigate();
 
   const username = useAppSelector(state => state.user.username)
 
@@ -35,6 +39,9 @@ const UserInfoAndSetting: React.FC = () => {
       name: '退出登陆',
       icon: 'bi bi-door-closed',
       onClick() {
+        persistor.purge().then(() => {
+          navigate('/sign-in')
+        })
       }
     },
 
@@ -66,8 +73,9 @@ const UserInfoAndSetting: React.FC = () => {
             <div className='flex-between'>
               <ul className='flex items-center'>
                 {
-                  CommonUtils.rolesFormat(roles).map(item =>
+                  CommonUtils.rolesFormat(roles).map((item,index) =>
                       <li
+                          key={index}
                           style={{
                             backgroundColor: item.bgColor
                           }}

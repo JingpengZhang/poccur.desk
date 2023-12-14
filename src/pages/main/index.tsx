@@ -1,6 +1,8 @@
 import {Outlet} from "react-router-dom";
 import TopBar from "@/components/top-bar";
 import SideBar from "@/components/side-bar";
+import withPrivateRoute from "@/hoc/with-private-route.tsx";
+
 
 const Main = () => {
   return (
@@ -16,4 +18,4 @@ const Main = () => {
   )
 }
 
-export default Main
+export default withPrivateRoute(Main)

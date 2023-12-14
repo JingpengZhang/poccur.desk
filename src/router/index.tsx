@@ -1,11 +1,16 @@
 import {createBrowserRouter} from "react-router-dom";
 import {lazy, Suspense} from "react";
 
+import RootPage from "@/pages";
+
 import ErrorRouterPage from "@/pages/error/error-router";
 import ErrorNetworkPage from "@/pages/error/error-network";
 import UnauthorizedPage from "@/pages/error/unauthorized";
 
-import LoginPage from "@/pages/login";
+import SignInPage from "@/pages/auth/sign-in";
+import SignUpPage from "@/pages/auth/sign-up";
+import ForgotPasswordPage from "@/pages/auth/forgot-password";
+import withSuspense from "@/hoc/with-suspense.tsx";
 
 
 const MainPage = lazy(() => import('@/pages/main'))
@@ -17,12 +22,11 @@ const ArticleCategory = lazy(() => import("@/pages/main/article-category"))
 const router = createBrowserRouter([
   {
     path: '/',
+    element: withSuspense(RootPage),
     children: [
       {
         path: 'main',
-        element: <Suspense>
-          <MainPage/>
-        </Suspense>,
+        element: withSuspense(MainPage),
         children: [
           {
             path: 'admin-menu',
@@ -39,15 +43,19 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: '/',
+        path: 'sign-in',
+        element: withSuspense(SignInPage),
+      },
+      {
+        path: 'sign-up',
         element: <Suspense>
-          <LoginPage/>
+          <SignUpPage/>
         </Suspense>,
       },
       {
-        path: 'login',
+        path: 'forgot-password',
         element: <Suspense>
-          <LoginPage/>
+          <ForgotPasswordPage/>
         </Suspense>,
       },
     ],

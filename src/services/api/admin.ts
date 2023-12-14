@@ -1,6 +1,7 @@
 const adminPrefix = '/admin'
 
 const AdminAPI = {
+  systemConfig: adminPrefix + '/system-config',
   menu: {
     create: adminPrefix + '/menu/create',
     list: adminPrefix + '/menu/list',
