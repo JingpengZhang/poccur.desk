@@ -12,8 +12,12 @@ import SignUpPage from "@/pages/auth/sign-up";
 import ForgotPasswordPage from "@/pages/auth/forgot-password";
 import withSuspense from "@/hoc/with-suspense.tsx";
 
+;
+
 
 const MainPage = lazy(() => import('@/pages/main'))
+
+import DashboardPage from "@/pages/main/dashboard"
 
 const AdminMenu = lazy(() => import('@/pages/main/admin-menu'))
 const ArticleCategory = lazy(() => import("@/pages/main/article-category"))
@@ -28,6 +32,14 @@ const router = createBrowserRouter([
         path: 'main',
         element: withSuspense(MainPage),
         children: [
+          {
+            path: '',
+            element: withSuspense(DashboardPage)
+          },
+          {
+            path: 'dashboard',
+            element: withSuspense(DashboardPage)
+          },
           {
             path: 'admin-menu',
             element: <Suspense>
