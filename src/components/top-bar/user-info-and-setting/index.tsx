@@ -1,10 +1,11 @@
 import React from "react";
-import CommonUtils from "@/utils/common-utils.ts";
 import {Role} from "@/libs/role.enum.ts";
-import {Avatar, Popover} from "antd";
+import {Popover} from "antd";
 import {useAppSelector} from "@/hooks/use-redux.ts";
 import {useNavigate} from "react-router-dom";
 import {persistor} from "@/store";
+import RoleList from "@/components/role-list";
+import Avatar from "@/components/avatar";
 
 interface Setting {
   name: string;
@@ -16,7 +17,7 @@ const UserInfoAndSetting: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const username = useAppSelector(state => state.user.username)
+  const {username, avatar} = useAppSelector(state => state.user)
 
   const roles: Role[] = [
     Role.Super
@@ -67,28 +68,15 @@ const UserInfoAndSetting: React.FC = () => {
           }
       >
         <div className='flex items-center h-[4.5rem] py-3 cursor-pointer'>
-          <Avatar size={46}>USER</Avatar>
+          <Avatar placeholder={username} fontSize='text-3xl' config={{
+            size: 46,
+            src: avatar || undefined
+          }}/>
+
           <div className='ml-3 h-full flex flex-col justify-between'>
             <p className='text-sm line-clamp-1'>{username || '用户名'}</p>
             <div className='flex-between'>
-              <ul className='flex items-center'>
-                {
-                  CommonUtils.rolesFormat(roles).map((item,index) =>
-                      <li
-                          key={index}
-                          style={{
-                            backgroundColor: item.bgColor
-                          }}
-                          className='text-xs mr-2 last:mr-0 px-1 py-0.5 rounded'>
-                    <span
-                        style={{
-                          color: item.color
-                        }}
-                    >{item.name}</span>
-                      </li>
-                  )
-                }
-              </ul>
+              <RoleList roles={roles} onlyOne/>
               <i className="bi bi-caret-down-fill text-blue-500 text-xs ml-3"></i>
             </div>
           </div>

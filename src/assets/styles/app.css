@@ -35,4 +35,10 @@ body {
     .flex-between {
         @apply flex items-center justify-between;
     }
+
+    .bg-spot-transparent {
+        background-image: radial-gradient(transparent 1px, #fff 0.5px);
+        background-size: 2px 2px;
+        backdrop-filter: saturate(50%) blur(5px);
+    }
 }

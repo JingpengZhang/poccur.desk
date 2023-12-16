@@ -8,14 +8,14 @@ interface Props {
 
 const InsidePage: React.FC<Props> = (props) => {
   return (
-      <section>
-        <div className='flex items-center justify-between mb-4 h-8'>
+      <section className='flex flex-col h-full overflow-y-auto relative'>
+        <div className='flex items-center justify-between mb-4 sticky top-0 bg-spot-transparent p-4 z-50 shadow'>
           <Breadcrumb/>
           <div className='flex items-center'>
             {props.extractRender}
           </div>
         </div>
-        <section>
+        <section className='flex flex-col flex-grow px-4 pb-4'>
           {props.children}
         </section>
       </section>
