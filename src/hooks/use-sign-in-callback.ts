@@ -1,6 +1,6 @@
 import {SignInResponseData} from "@/services/auth/auth.ts";
 import {fetchMenuTree, setToken} from "@/store/main";
-import {setUserInfo} from "@/store/user";
+import {fetchCurrentUserProfile} from "@/store/user";
 import {useAppDispatch} from "@/hooks/use-redux.ts";
 
 const useSignInCallback = () => {
@@ -8,9 +8,9 @@ const useSignInCallback = () => {
   const dispatch = useAppDispatch()
 
   const run = (signInResponseData: SignInResponseData) => {
-    const {token, userInfo} = signInResponseData
+    const {token} = signInResponseData
     dispatch(setToken(token))
-    dispatch(setUserInfo(userInfo))
+    dispatch(fetchCurrentUserProfile())
     dispatch(fetchMenuTree())
   }
 

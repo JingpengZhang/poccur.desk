@@ -7,7 +7,10 @@ const API = {
   ClientAPI,
   AuthAPI,
   user: {
-    updateAvatar: '/user/update-avatar'
+    updateAvatar: '/user/update-avatar',
+    update: '/user/update',
+    profile: '/user/profile',
+    getCurrentUserProfile: '/user/current-user-profile'
   }
 }
 

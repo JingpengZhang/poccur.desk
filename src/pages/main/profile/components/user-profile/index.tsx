@@ -10,7 +10,7 @@ import useDialog from "@/hooks/use-dialog.ts";
 
 const UserProfile: React.FC = () => {
 
-  const {avatar, username} = useAppSelector(state => state.user)
+  const {avatar, username, description, career} = useAppSelector(state => state.user)
 
   const statistics = [
     {
@@ -55,7 +55,7 @@ const UserProfile: React.FC = () => {
                 <div className='h-full ml-4 flex justify-between flex-col py-1'>
                   <p className='line-clamp-1'>{username}</p>
                   <Space className='text-zinc-500 text-sm'>
-                    <span className='line-clamp-1'>Full-Stack-Developer</span>
+                    <span className='line-clamp-1'>{career}</span>
                   </Space>
                   <Space className='flex items-center text-xs text-zinc-500'>
                     <Space className='flex-center'>
@@ -81,9 +81,9 @@ const UserProfile: React.FC = () => {
             </div>
             <div className='flex-grow'>
               <h2 className='font-black'>个人简介</h2>
-              <p className='text-sm text-zinc-500 mt-2 leading-6 line-clamp-2'>Vms
-                具有清晰简洁的代码结构，易于理解和维护，具备良好的可扩展性，在此基础上进行二次开发更加高效；此外，开源社区的版本更新速度、Issue
-                讨论、Bug fix 都非常迅速，为我们提供了好的支持。</p>
+              <p className='text-sm text-zinc-500 mt-2 leading-6 line-clamp-2'>
+                {description || '暂无'}
+              </p>
             </div>
 
           </div>

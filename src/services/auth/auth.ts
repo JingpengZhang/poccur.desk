@@ -28,8 +28,7 @@ export interface UserInfo {
 }
 
 export interface SignInResponseData {
-  token: string,
-  userInfo: UserInfo
+  token: string
 }
 
 export const signInRequest = async (params: SignInFormParams) => {

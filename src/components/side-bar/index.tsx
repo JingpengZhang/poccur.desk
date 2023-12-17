@@ -36,6 +36,10 @@ const SideBar: React.FC = () => {
           menuItem.key = menuItem.id;
           menuItem.icon = <i className={menuItem.iconclass}/>;
           menuItem.disabled = !menuItem.enable
+          // @ts-ignore
+          menuItem.enable = menuItem.enable.toString()
+          // @ts-ignore
+          menuItem.visible = menuItem.visible.toString()
           _menuList.push(menuItem)
           if (menuItem.children) loop(menuItem.children);
         } else {
