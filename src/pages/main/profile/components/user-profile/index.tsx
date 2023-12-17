@@ -3,8 +3,14 @@ import Card from "@/components/card";
 import {Space} from "antd";
 import numeral from 'numeral'
 import Avatar from "@/components/avatar";
+import {useAppSelector} from "@/hooks/use-redux.ts";
+import commonUtils from "@/utils/common-utils.ts";
+import ChangeAvatarDialog from "@/components/change-avatar-dialog";
+import useDialog from "@/hooks/use-dialog.ts";
 
 const UserProfile: React.FC = () => {
+
+  const {avatar, username} = useAppSelector(state => state.user)
 
   const statistics = [
     {
@@ -21,6 +27,10 @@ const UserProfile: React.FC = () => {
     }
   ]
 
+  const changeAvatarDialogState = useDialog({
+    title: '修改头像'
+  })
+
   return (
       <Card noHeader>
         <div className='p-6'>
@@ -31,16 +41,19 @@ const UserProfile: React.FC = () => {
                   <Avatar placeholder='USER' fontSize={'text-3xl'}
                           config={{
                             size: 80,
-                            shape: 'square'
+                            shape: 'square',
+                            src: commonUtils.getServerPrefix() + avatar,
+                            className: 'flex-shrink-0',
                           }}
                   />
                   <div
                       className='absolute top-0 left-full group-hover:left-0 w-full h-full bg-[rgba(0,0,0,0.8)] flex items-center justify-center'>
-                    <i className="bi bi-pencil-square text-white cursor-pointer hover:text-primary transition-all"></i>
+                    <i onClick={changeAvatarDialogState.openDialog}
+                       className="bi bi-pencil-square text-white cursor-pointer hover:text-primary transition-all"></i>
                   </div>
                 </div>
                 <div className='h-full ml-4 flex justify-between flex-col py-1'>
-                  <p className='line-clamp-1'>Toni Stark</p>
+                  <p className='line-clamp-1'>{username}</p>
                   <Space className='text-zinc-500 text-sm'>
                     <span className='line-clamp-1'>Full-Stack-Developer</span>
                   </Space>
@@ -75,6 +88,8 @@ const UserProfile: React.FC = () => {
 
           </div>
         </div>
+
+        <ChangeAvatarDialog {...changeAvatarDialogState} closeDialogCallback={changeAvatarDialogState.closeDialog}/>
       </Card>
   )
 }

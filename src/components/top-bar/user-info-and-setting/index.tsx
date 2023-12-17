@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {persistor} from "@/store";
 import RoleList from "@/components/role-list";
 import Avatar from "@/components/avatar";
+import CommonUtils from "@/utils/common-utils.ts";
 
 interface Setting {
   name: string;
@@ -70,7 +71,7 @@ const UserInfoAndSetting: React.FC = () => {
         <div className='flex items-center h-[4.5rem] py-3 cursor-pointer'>
           <Avatar placeholder={username} fontSize='text-3xl' config={{
             size: 46,
-            src: avatar || undefined
+            src: (avatar && CommonUtils.getServerPrefix() + avatar) || undefined
           }}/>
 
           <div className='ml-3 h-full flex flex-col justify-between'>

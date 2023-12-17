@@ -22,8 +22,11 @@ export const userSlice = createSlice({
     setUserInfo: (state, action: PayloadAction<Partial<UserInfo>>) => {
       Object.assign(state, action.payload)
     },
+    setAvatar:(state,action:PayloadAction<string>)=>{
+      state.avatar = action.payload
+    }
   }
 })
 
-export const {setUserInfo} = userSlice.actions
+export const {setUserInfo,setAvatar} = userSlice.actions
 export default userSlice.reducer

@@ -5,7 +5,10 @@ import AuthAPI from "@/services/api/auth.ts";
 const API = {
   AdminAPI,
   ClientAPI,
-  AuthAPI
+  AuthAPI,
+  user: {
+    updateAvatar: '/user/update-avatar'
+  }
 }
 
 export default API

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri"
@@ -14,6 +14,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "@tauri-apps/api": "^1.5.1",
     "antd": "^5.12.1",
+    "antd-img-crop": "^4.18.0",
     "axios": "^1.6.2",
     "bootstrap-icons": "^1.11.2",
     "dayjs": "^1.11.10",

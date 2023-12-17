@@ -1,10 +1,10 @@
 import axios, {AxiosError} from "axios";
 import {message} from "antd";
-import * as NProgress from "nprogress";
+import NProgress from "nprogress";
 import {store} from "@/store";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: '//' + import.meta.env.VITE_APP_API_PREFIX
 });
 
 // 错误处理函数

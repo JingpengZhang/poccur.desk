@@ -10,6 +10,9 @@ const AdminAPI = {
     updateIndex: adminPrefix + "/menu/update_index",
     delete: adminPrefix + "/menu/delete"
   },
+  user:{
+    updateAvatar:adminPrefix + '/user/update-avatar'
+  }
 }
 
 export default AdminAPI
