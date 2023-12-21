@@ -15,7 +15,7 @@ const handleErr = (error: AxiosError) => {
     if (response.status === 401) {
       // window.location.pathname = '/unauthorized'
       message.warning('登陆已过期,请重新登陆')
-      window.location.pathname = '/login-in'
+      window.location.pathname = '/sign-in'
     }
   }
   NProgress.done()

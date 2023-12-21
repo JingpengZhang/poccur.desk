@@ -20,7 +20,6 @@ const CUDialog: React.FC<Props> = (props) => {
       form.setFieldValue('name', name);
       form.setFieldValue('alias', alias);
       form.setFieldValue('description', description);
-      console.log(props.data)
     }
   }, [props.data, props.visible])
 
@@ -32,7 +31,7 @@ const CUDialog: React.FC<Props> = (props) => {
   const onRequestFinish = () => {
     props.submitCallback();
     form.resetFields();
-    props.closeDialogFn();
+    props.closeDialog();
     loading.setState(false)
   }
 
@@ -71,7 +70,7 @@ const CUDialog: React.FC<Props> = (props) => {
 
   const onCancel = () => {
     form.resetFields();
-    props.closeDialogFn();
+    props.closeDialog();
   }
 
   return (

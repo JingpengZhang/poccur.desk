@@ -3,7 +3,7 @@ import {Space} from "antd";
 import CUDialog from "@/pages/main/article-category/components/cu-dialog";
 import useCuDialog from "@/hooks/use-cu-dialog.ts";
 import {
-  ArticleCategory,
+  ArticleCategory, ArticleCategoryFormParams,
   getArticleCategoryListRequest
 } from "@/services/client/article-category.ts";
 import API from "@/services/api";
@@ -46,7 +46,7 @@ const Page: React.FC = () => {
   });
 
 
-  const CUDialogState = useCuDialog({
+  const CUDialogState = useCuDialog<ArticleCategoryFormParams>({
     name: '分类'
   })
 
@@ -100,23 +100,27 @@ const Page: React.FC = () => {
             },
             {
               title: '操作',
-              dataIndex: 'actions',
-              width: 160,
-              render: (_, rowData) => <Space>
-                <TableButton.Edit
-                    onClick={() => CUDialogState.openDialog('update', {
-                      data: rowData,
-                      updateId: rowData.id
+              dataIndex: 'action',
+              render: (_, rowData) => (
+                  <Space>
+                    <TableButton.Edit onClick={() => CUDialogState.openDialog("update", {
+                      updateId: rowData.id,
+                      data: {
+                        name: rowData.name,
+                        alias: rowData.alias,
+                        description: rowData.description
+                      }
                     })}/>
-                <TableButton.Delete
-                    onClick={() => handleDelete([rowData.id])}/>
-              </Space>
-            },
+                    <TableButton.Delete onClick={() => handleDelete([rowData.id])}/>
+                  </Space>
+              )
+            }
+
           ]
         }}
     />
 
-    <CUDialog {...CUDialogState} closeDialogFn={CUDialogState.closeDialog} submitCallback={getList}/>
+    <CUDialog {...CUDialogState} submitCallback={getList}/>
   </InsidePage>
 }
 

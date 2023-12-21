@@ -20,6 +20,7 @@ import DashboardPage from "@/pages/main/dashboard"
 const AdminMenu = lazy(() => import('@/pages/main/admin-menu'))
 const ArticleCategory = lazy(() => import("@/pages/main/article-category"))
 const ProfilePage = lazy(() => import('@/pages/main/profile'))
+const TagPage = lazy(() => import('@/pages/main/tag'))
 
 
 const router = createBrowserRouter([
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             element: <Suspense>
               <ArticleCategory/>
             </Suspense>,
+          },
+          {
+            path: 'tag',
+            element: withSuspense(TagPage)
           },
           {
             path: 'profile',

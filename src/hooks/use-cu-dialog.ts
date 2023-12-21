@@ -9,7 +9,7 @@ export interface CUDialogProps<T> {
   mode: CUDialogMode;
   data: T,
   updateId: string,
-  closeDialogFn: () => void
+  closeDialog: () => void
   submitCallback?: () => void
 }
 

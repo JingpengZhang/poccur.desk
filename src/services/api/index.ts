@@ -11,6 +11,12 @@ const API = {
     update: '/user/update',
     profile: '/user/profile',
     getCurrentUserProfile: '/user/current-user-profile'
+  },
+  tag: {
+    create: '/tag/create',
+    update: '/tag/update',
+    delete: '/tag/delete',
+    list: '/tag/list',
   }
 }
 
